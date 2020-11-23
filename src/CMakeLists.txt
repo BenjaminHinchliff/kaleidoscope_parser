@@ -9,16 +9,18 @@ set(KALEIDOSCOPE_INCLUDE
 "${KALEIDOSCOPE_INCLUDE_PREFIX}/parser.hpp"
 "${KALEIDOSCOPE_INCLUDE_PREFIX}/parser_def.hpp"
 "${KALEIDOSCOPE_INCLUDE_PREFIX}/ast_printer.hpp"
-"${KALEIDOSCOPE_INCLUDE_PREFIX}/ast_simplify.hpp")
+"${KALEIDOSCOPE_INCLUDE_PREFIX}/ast_simplify.hpp"
+"${KALEIDOSCOPE_INCLUDE_PREFIX}/parse.hpp")
 
 set(KALEIDOSCOPE_SRCS
 "parser.cpp"
 "ast_printer.cpp"
-"ast_simplify.cpp")
+"ast_simplify.cpp"
+"parse.cpp")
 
-add_library(kaleidoscope_parser ${KALEIDOSCOPE_SRCS} ${KALEIDOSCOPE_INCLUDE})
+add_library(kaleidoscope_parse ${KALEIDOSCOPE_SRCS} ${KALEIDOSCOPE_INCLUDE})
 
-target_include_directories(kaleidoscope_parser PUBLIC ${KALEIDOSCOPE_INCLUDE_PREFIX})
+target_include_directories(kaleidoscope_parse PUBLIC ${KALEIDOSCOPE_INCLUDE_PREFIX})
 
 find_package(Boost 1.70.0 REQUIRED)
-target_include_directories(kaleidoscope_parser PUBLIC ${Boost_INCLUDE_DIRS})
+target_include_directories(kaleidoscope_parse PUBLIC ${Boost_INCLUDE_DIRS})

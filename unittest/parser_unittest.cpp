@@ -4,12 +4,7 @@
 
 #include <array>
 
-#include "ast.hpp"
-#include "ast_adapted.hpp"
-#include "ast_printer.hpp"
-#include "ast_simplify.hpp"
-#include "config.hpp"
-#include "parser.hpp"
+#include "parse.hpp"
 
 namespace x3 = boost::spirit::x3;
 using x3::ascii::space;
@@ -27,7 +22,7 @@ TEST(Parser, Number) {
   ASSERT_TRUE(r);
   ASSERT_EQ(iter, end);
 
-  numberExpr = boost::apply_visitor(ast::simplify{}, numberExpr);
+  numberExpr = boost::apply_visitor(ast::simplify_expr{}, numberExpr);
 
   ASSERT_EQ(boost::get<double>(numberExpr), std::stod(numberStr));
 }
@@ -44,7 +39,7 @@ TEST(Parser, Variable) {
   ASSERT_TRUE(r);
   ASSERT_EQ(iter, end);
 
-  variableExpr = boost::apply_visitor(ast::simplify{}, variableExpr);
+  variableExpr = boost::apply_visitor(ast::simplify_expr{}, variableExpr);
 
   ASSERT_EQ(boost::get<std::string>(variableExpr), variableStr);
 }
@@ -60,7 +55,7 @@ TEST(Parser, Call) {
   ASSERT_TRUE(r);
   ASSERT_EQ(iter, end);
 
-  callExpr = boost::apply_visitor(ast::simplify{}, callExpr);
+  callExpr = boost::apply_visitor(ast::simplify_expr{}, callExpr);
 
   const auto &call = boost::get<x3::forward_ast<ast::call>>(callExpr).get();
   ASSERT_EQ(call.callee, "func");
@@ -81,7 +76,7 @@ TEST(Parser, Operations) {
   ASSERT_TRUE(r);
   ASSERT_EQ(iter, end);
 
-  opsExpr = boost::apply_visitor(ast::simplify{}, opsExpr);
+  opsExpr = boost::apply_visitor(ast::simplify_expr{}, opsExpr);
 
   const auto &ops = boost::get<x3::forward_ast<ast::operations>>(opsExpr).get();
   ASSERT_EQ(boost::get<double>(ops.first), 1);
@@ -118,36 +113,24 @@ TEST(Parser, Prototype) {
 TEST(Parser, Extern) {
   std::string externStr = "extern proto()";
 
-  auto iter = externStr.cbegin();
-  auto end = externStr.cend();
-
   ast::top_function externExpr;
-  bool r =
-      x3::phrase_parse(iter, end, kaleidoscope::top_function(), space, externExpr);
+  bool r = kaleidoscope::parse(externStr, externExpr);
   ASSERT_TRUE(r);
-  ASSERT_EQ(iter, end);
 
   const auto &extern_ = boost::get<ast::prototype>(externExpr);
   ASSERT_EQ(extern_.name, "proto");
   ASSERT_TRUE(extern_.args.empty());
 }
 
-TEST(Parser, Function) { std::string functionStr = "def two() 2";
-
-  auto iter = functionStr.cbegin();
-  auto end = functionStr.cend();
-
+TEST(Parser, Function) {
+  std::string functionStr = "def two() 2";
   ast::top_function functionExpr;
-  bool r = x3::phrase_parse(iter, end, kaleidoscope::top_function(), space,
-                            functionExpr);
+  bool r = kaleidoscope::parse(functionStr, functionExpr);
   ASSERT_TRUE(r);
-  ASSERT_EQ(iter, end);
 
   auto &function = boost::get<ast::function>(functionExpr);
   ASSERT_EQ(function.proto.name, "two");
   ASSERT_TRUE(function.proto.args.empty());
-
-  function.body = boost::apply_visitor(ast::simplify{}, function.body);
 
   ASSERT_EQ(boost::get<double>(function.body), 2);
 }
