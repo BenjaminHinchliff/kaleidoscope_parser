@@ -4,7 +4,7 @@
 
 #include <array>
 
-#include "parse.hpp"
+#include <kaleidoscope/parser/parse.hpp>
 
 namespace x3 = boost::spirit::x3;
 using x3::ascii::space;

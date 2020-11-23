@@ -1,4 +1,4 @@
-#include "ast_simplify.hpp"
+#include "kaleidoscope/parser/ast_simplify.hpp"
 
 namespace kaleidoscope {
 namespace ast {

@@ -1,4 +1,4 @@
-#include "parse.hpp"
+#include "kaleidoscope/parser/parse.hpp"
 
 namespace kaleidoscope {
 bool parse(const std::string &input, ast::top_function &output) {

@@ -1,4 +1,4 @@
-#include "ast_printer.hpp"
+#include "kaleidoscope/parser/ast_printer.hpp"
 
 namespace kaleidoscope {
 namespace ast {

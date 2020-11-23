@@ -1,5 +1,5 @@
-#include "config.hpp"
-#include "parser_def.hpp"
+#include "kaleidoscope/parser/config.hpp"
+#include "kaleidoscope/parser/parser_def.hpp"
 
 namespace kaleidoscope {
 namespace parser {
