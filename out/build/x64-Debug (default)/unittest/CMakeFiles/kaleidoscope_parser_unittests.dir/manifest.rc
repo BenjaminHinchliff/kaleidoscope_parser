@@ -1,0 +1,2 @@
+#pragma code_page(65001)
+1 /* CREATEPROCESS_MANIFEST_RESOURCE_ID */ 24 /* RT_MANIFEST */ "C:/Users/benja_zlwgpc2/source/repos/menthol-parser/out/build/x64-Debug (default)/unittest/CMakeFiles/kaleidoscope_parser_unittests.dir/embed.manifest"

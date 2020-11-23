@@ -1,0 +1,6 @@
+Hello.Hellos 1 0.158327
+Parser.Number 3 0.0129843
+Parser.Variable 3 0.00271893
+Parser.Call 3 0.00253513
+Parser.Operations 3 0.0025961
+---
