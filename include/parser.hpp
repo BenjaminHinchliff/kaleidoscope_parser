@@ -9,7 +9,7 @@ namespace kaleidoscope {
 namespace parser {
 namespace x3 = boost::spirit::x3;
 class expr_class;
-using expr_type = x3::rule<expr_class, ast::expr, true>;
+using expr_type = x3::rule<expr_class, ast::expr>;
 class prototype_class;
 using prototype_type = x3::rule<prototype_class, ast::prototype>;
 class top_function_class;
