@@ -28,6 +28,7 @@ const x3::rule<class function, ast::function> function = "function";
 const top_function_type top_function = "top function";
 
 const result_type result = "parsing result";
+const result_all_type result_all = "full parsing result";
 
 const auto ident_def = char_("A-Za-z_") >> *char_("A-Za-z_0-9");
 const auto call_def = ident >> '(' >> -(expr % ',') >> ')';
@@ -51,8 +52,10 @@ const auto top_function_def = extern_ | function;
 
 const auto result_def = top_function | expr;
 
+const auto result_all_def = +(result >> ';');
+
 BOOST_SPIRIT_DEFINE(ident, call, term, factor, operations, nested, expr,
-                    prototype, extern_, function, top_function, result);
+                    prototype, extern_, function, top_function, result, result_all);
 } // namespace parser
 
 parser::expr_type expr() { return parser::expr; }
@@ -62,6 +65,8 @@ parser::prototype_type proto() { return parser::prototype; }
 parser::top_function_type top_function() { return parser::top_function; }
 
 parser::result_type result() { return parser::result; }
+
+parser::result_all_type result_all() { return parser::result_all; }
 } // namespace kaleidoscope
 
 #endif // !KALEIDOSCOPE_EMPLOYEE_DEF_HPP

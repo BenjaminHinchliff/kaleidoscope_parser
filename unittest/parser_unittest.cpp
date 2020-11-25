@@ -138,3 +138,12 @@ TEST(Parser, Function) {
 
   ASSERT_EQ(boost::get<double>(function.body), 2);
 }
+
+TEST(Parser, Multiple) {
+  std::string functionStr = "def two() 2; two();";
+  std::list<ast::result> parsed;
+  bool r = kaleidoscope::parse_all(functionStr, parsed);
+  ASSERT_TRUE(r);
+
+  ASSERT_EQ(parsed.size(), 2);
+}
