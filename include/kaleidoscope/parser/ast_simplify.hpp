@@ -20,6 +20,12 @@ public:
   ast::top_function operator()(ast::function function) const;
   ast::top_function operator()(const ast::prototype &prototype) const;
 };
+
+class simplify_result : public boost::static_visitor<ast::result> {
+public:
+  ast::result operator()(const ast::top_function &func) const;
+  ast::result operator()(const ast::expr &expr) const;
+};
 } // namespace ast
 } // namespace kaleidoscope
 

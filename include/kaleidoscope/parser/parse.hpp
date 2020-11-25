@@ -10,7 +10,7 @@
 namespace kaleidoscope {
 namespace x3 = boost::spirit::x3;
 
-bool parse(const std::string &input, ast::top_function &output);
+bool parse(const std::string &input, ast::result &output);
 } // namespace kaleidoscope
 
 #endif // !KALEIDOSCOPE_PARSE_HPP

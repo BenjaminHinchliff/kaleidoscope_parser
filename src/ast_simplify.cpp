@@ -38,5 +38,13 @@ ast::top_function simplify::operator()(const ast::prototype &prototype) const {
   return ast::top_function(prototype);
 }
 
+ast::result simplify_result::operator()(const ast::top_function &func) const {
+  return ast::result(boost::apply_visitor(simplify{}, func));
+}
+
+ast::result simplify_result::operator()(const ast::expr &expr) const {
+  return ast::result(boost::apply_visitor(simplify_expr{}, expr));
+}
+
 } // namespace ast
 } // namespace kaleidoscope

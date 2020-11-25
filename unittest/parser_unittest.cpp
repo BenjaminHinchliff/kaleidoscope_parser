@@ -113,22 +113,26 @@ TEST(Parser, Prototype) {
 TEST(Parser, Extern) {
   std::string externStr = "extern proto()";
 
-  ast::top_function externExpr;
+  ast::result externExpr;
   bool r = kaleidoscope::parse(externStr, externExpr);
   ASSERT_TRUE(r);
 
-  const auto &extern_ = boost::get<ast::prototype>(externExpr);
+  const auto &externFunc = boost::get<ast::top_function>(externExpr);
+
+  const auto &extern_ = boost::get<ast::prototype>(externFunc);
   ASSERT_EQ(extern_.name, "proto");
   ASSERT_TRUE(extern_.args.empty());
 }
 
 TEST(Parser, Function) {
   std::string functionStr = "def two() 2";
-  ast::top_function functionExpr;
+  ast::result functionExpr;
   bool r = kaleidoscope::parse(functionStr, functionExpr);
   ASSERT_TRUE(r);
 
-  auto &function = boost::get<ast::function>(functionExpr);
+  const auto functionFunc = boost::get<ast::top_function>(functionExpr);
+
+  auto &function = boost::get<ast::function>(functionFunc);
   ASSERT_EQ(function.proto.name, "two");
   ASSERT_TRUE(function.proto.args.empty());
 

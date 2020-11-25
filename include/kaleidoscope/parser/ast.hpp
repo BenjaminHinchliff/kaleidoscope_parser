@@ -52,6 +52,11 @@ struct top_function : public x3::variant<prototype, function> {
   using base_type::operator=;
 };
 
+struct result : public x3::variant<top_function, expr> {
+  using base_type::base_type;
+  using base_type::operator=;
+};
+
 } // namespace ast
 } // namespace kaleidoscope
 
